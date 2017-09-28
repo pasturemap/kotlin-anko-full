@@ -81,7 +81,7 @@ fun ImageView.bindUri(
         imageMaxHeight: Int = 2048,
         requestBuilder: Request.Builder = Request.Builder(),
         loadingObs: MutableObservableProperty<Boolean> = StandardObservableProperty(false),
-        onLoadComplete: (state: Int) -> Unit = {}
+        onLoadComplete: (state: Int, bitmap: Bitmap?) -> Unit = { state, bitmap -> }
 ) {
     var lastUri: String? = "nomatch"
     lifecycle.bind(uriObservable) { uri ->
@@ -93,7 +93,7 @@ fun ImageView.bindUri(
             if (noImageResource != null) {
                 imageResource = noImageResource
             }
-            onLoadComplete(0)
+            onLoadComplete(0, null)
         } else {
             val uriObj = Uri.parse(uri)
             if (uriObj.scheme?.contains("http") ?: false) {
@@ -107,23 +107,23 @@ fun ImageView.bindUri(
                             imageResource = brokenImageResource
                         }
                         Log.e("ImageView.ext", "Error: " + it.errorString)
-                        onLoadComplete(-1)
+                        onLoadComplete(-1, null)
                     } else {
                         imageBitmap = it.result
-                        onLoadComplete(1)
+                        onLoadComplete(1, it.result)
                     }
                 }
             } else {
                 try {
                     imageBitmap = context.getBitmapFromUri(Uri.parse(uri), imageMaxWidth, imageMaxHeight)!!
-                    onLoadComplete(1)
+                    onLoadComplete(1, null)
                 } catch(e: Exception) {
                     if (brokenImageResource != null) {
                         imageResource = brokenImageResource
                     }
                     Log.e("ImageView.ext", "Error: " + e.message)
                     e.printStackTrace()
-                    onLoadComplete(-1)
+                    onLoadComplete(-1, null)
                 }
             }
         }
