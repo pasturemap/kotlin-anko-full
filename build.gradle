@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 16
@@ -13,9 +13,15 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        staging {
+
         }
     }
 
@@ -37,15 +43,15 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile project(':kotlin-anko-networking')
-    compile project(':kotlin-anko-observable')
-    compile project(':kotlin-anko-view-controllers')
+    api project(':kotlin-anko-networking')
+    api project(':kotlin-anko-observable')
+    api project(':kotlin-anko-view-controllers')
 }
 
 buildscript {
-    ext.kotlin_version = '1.1.2-3'
+    ext.kotlin_version = '1.1.51'
     repositories {
         mavenCentral()
     }
