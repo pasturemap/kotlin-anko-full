@@ -77,8 +77,8 @@ fun ImageView.bindUri(
         uriObservable: ObservableProperty<String?>,
         noImageResource: Int? = null,
         brokenImageResource: Int? = null,
-        imageMaxWidth: Int = 2048,
-        imageMaxHeight: Int = 2048,
+        imageMaxWidth: Int = 1024,
+        imageMaxHeight: Int = 1024,
         requestBuilder: Request.Builder = Request.Builder(),
         loadingObs: MutableObservableProperty<Boolean> = StandardObservableProperty(false),
         onLoadComplete: (state: Int, bitmap: Bitmap?) -> Unit = { state, bitmap -> }
